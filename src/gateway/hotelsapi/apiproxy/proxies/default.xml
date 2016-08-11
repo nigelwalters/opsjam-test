@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>Spike-Arrest-10pm</Name>
+            </Step>
+            <Step>
+                <Name>Verify-API-Key</Name>
+            </Step>
+            <Step>
+                <Name>Validate-OAuth-v2-Token</Name>
+                <Condition>1=2</Condition>
+            </Step>
+            <Step>
+                <Name>Remove-APIKey-QP</Name>
+            </Step>
+            <Step>
+                <Name>Cache-Hotels-Data</Name>
+            </Step>
+            <Step>
+                <Name>Remove-Authorization-Header</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="Get hotel by uuid">
+            <Description>Get hotel by uuid</Description>
+            <Request/>
+            <Response>
+                <Step>
+                    <Name>Extract-Variables</Name>
+                </Step>
+                <Step>
+                    <Name>Statistics-Collector</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/hotels/*") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="Create new hotel">
+            <Description>Create new hotel</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/hotels") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="Find all hotels">
+            <Description>Find all hotels</Description>
+            <Request>
+                <Step>
+                    <Name>Create-Geo-Coding-Request</Name>
+                </Step>
+                <Step>
+                    <Name>Call-Geo-Coding-API</Name>
+                </Step>
+                <Step>
+                    <Name>Extract-Geo-Codes</Name>
+                </Step>
+                <Step>
+                    <Name>Create-Location-Query</Name>
+                </Step>
+                <Step>
+                    <Name>Set-Query-Parameters</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Create-Final-Response</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/hotels") and (request.verb = "GET")</Condition>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/v1/nw_hotels</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

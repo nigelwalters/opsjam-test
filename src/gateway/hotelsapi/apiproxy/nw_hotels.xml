@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="nw_hotels">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1464796501557</CreatedAt>
+    <CreatedBy>nwalters@apigee.com</CreatedBy>
+    <Description>This is a sample Hotels Server.  You can find out more about OpenAPI spec at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).</Description>
+    <DisplayName>nw_hotels</DisplayName>
+    <LastModifiedAt>1470747160623</LastModifiedAt>
+    <LastModifiedBy>nwalters@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>Cache-Hotels-Data</Policy>
+        <Policy>Call-Geo-Coding-API</Policy>
+        <Policy>Create-Final-Response</Policy>
+        <Policy>Create-Geo-Coding-Request</Policy>
+        <Policy>Create-Location-Query</Policy>
+        <Policy>Extract-Geo-Codes</Policy>
+        <Policy>Extract-Variables</Policy>
+        <Policy>Remove-API-Key-QP</Policy>
+        <Policy>Remove-APIKey-QP</Policy>
+        <Policy>Remove-Authorization-Header</Policy>
+        <Policy>Set-Query-Parameters</Policy>
+        <Policy>Spike-Arrest-10pm</Policy>
+        <Policy>Statistics-Collector</Policy>
+        <Policy>Validate-OAuth-v2-Token</Policy>
+        <Policy>Verify-API-Key</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://Create-Final-Response.js</Resource>
+        <Resource>jsc://Create-Location-Query.js</Resource>
+        <Resource>openapi://association.json</Resource>
+    </Resources>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>
